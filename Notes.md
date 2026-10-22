@@ -1,4 +1,5 @@
 # My Notes
+
 ## The setup
 * Created repo the_skool_johan_v (kept johan_v instead of full name, for privacy)
 * .gitignore: secrets (.env, *.env), nano *.save, OS files. Removed the Vim section because its pattern could match .sql files
@@ -36,3 +37,13 @@
 to show where i keep all my projects (OBS: /scripts is not a folder nor a temp folder, just a marker), will later be changed to specific folder to go a clean 0 trust baseline again, mostly for frictionless testing.
 * My first connect failed with 'orac ~/oracle/hello.pls' and error code ORA-12514. Because oracle needed time to start up and 
 sometimes it does checks before everything is set, so it connected to early. 
+
+## Queries
+* COUNT(CASE WHEN ...): took me 4 hours to get right, Claude went down for a couple of hours so i had to use my google skills.
+  Source: https://www.interviewquery.com/p/sql-count-case-when
+* The idea: turn "Beviljad" into a 1, so it can be added up 1+1+1+1=4 for everything that got Beviljad.
+  Avslag is important data, but not for this count.
+* Used it to pack several counts in one SELECT instead of many blocks (Uppgift 1 a–e).
+* Then got curious how to get a %: x = (beviljad * 100.0) / count(*), where count(*) = total applications.
+  Put () around (COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0) so i know for a fact it gets counted first as a whole.
+  ROUND(..., 2) keeps 2 decimals. (Experiment for now, planned for Uppgift 3.)
