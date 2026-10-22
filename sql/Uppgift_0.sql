@@ -2,6 +2,9 @@
 -- Purpose: load MYH application results 2025 (Tabell 3) into one flat table
 -- LLM note: load script drafted with LLM assistance (Claude), reviewed by me. 
 
+-- Uppgift 0
+-- e)
+
 -- Drop the old table first so the script can be rerun from scratch
 -- IF EXISTS: no error on the very first run, when the table doesn't exist
 DROP TABLE IF EXISTS MYH_TABELL_2025;
