@@ -29,9 +29,14 @@ ORDER BY ANTAL_ANSÖKNINGAR DESC;
 
 -- Uppgift 1
 -- f). was about to use the same method as d)/e) but had some knowledge gap and was prompted to fix it with a much more elegant way
+-- still not satisfied because the data looks ugly, sure Nackademin Aktiebolag comes up a lot for example, and it only should show once
 SELECT UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN, COUNT(*) AS ANTAL_BEVILJAD
 FROM MYH_TABELL_2025
 WHERE UTBILDNINGSOMRÅDE = 'Data/IT' 
     AND BESLUT = 'Beviljad'
 GROUP BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN
-ORDER BY ANTAL_BEVILJADE DESC;
+ORDER BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; 
+-- ORDER BY ANTAL_BEVILJAD DESC; was my last attempt, but apparently it was wrong, and couldnt figure it out
+-- why it was showing everything reults that where duplicates when not needed to clean it up. 
+-- claude LLM suggested that i put UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; because its A -> Z because its not a numerical value
+-- and DESC; is not needed. THIS IS A HUGE KNOWLEDGE GAP AND I WILL READ MORE THOROUGLY ABOUT IT
