@@ -4,9 +4,9 @@
 
 DROP TABLE IF EXISTS myh_tabell_2025;
 
-SET LOADFORMAT CSV
-SET LOAD SCAN_ROWS 2000
+SET LOADFORMAT CSV -- format im loading the table in, csv so it can take å/ä/ö
+SET LOAD SCAN_ROWS 2000 -- added 2000 rows because there was a problem with 100_000 for some reason so kept it simple
 LOAD TABLE myh_tabell_2025 '/home/bunk.moreland/projects/the_skool_johan_v/data/resultat_2025_tabell3.csv' NEW
 
--- sanity check: compare with `wc -l` on the CSV, minus 1 for the header
+-- simple sanity check of the table numbered.
 SELECT COUNT(*) FROM myh_tabell_2025;
