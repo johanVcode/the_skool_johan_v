@@ -5,22 +5,23 @@ the education provider **The Skool** make data-driven decisions about which prog
 to apply for.
 
 ## Uppgift 0 – Uppvärmning
+Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - [x] a) Repo: `the_skool_johan_v` (surname shortened for privacy)
 - [x] b) [.gitignore](.gitignore)
 - [x] c) Data from MYH: [screenshot](screenshots/myh_source_2025.png)
 - [x] d) Only Tabell 3 kept: [data/resultat_2025_tabell3.csv](data/resultat_2025_tabell3.csv)
-- [x] e) Load into Oracle: [sql/01_load_data.sql](sql/01_load_data.sql)
+- [x] e) Load into Oracle: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - [x] f) One script per task: see the [sql/](sql/) folder
-- [x] Extra: data cleaning (130 values with extra spaces): [sql/02_clean_data.sql](sql/02_clean_data.sql)
+- [x] Extra: data cleaning (130 values with extra spaces), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 
 ## Uppgift 1 – Grundläggande EDA
-Code: [sql/03_u1_eda.sql](sql/03_u1_eda.sql)
+Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - [x] a) Applications per education area, sorted most first
 - [x] b) Approved applications per education area
 - [x] c) Rejected applications per education area
-- [ ] d) Approved per program name within Data/IT
-- [ ] e) Rejected per program name within Data/IT
-- [ ] f) Approved per provider + program name within Data/IT
+- [x] d) Approved per program name within Data/IT
+- [x] e) Rejected per program name within Data/IT
+- [x] f) Approved per provider + program name within Data/IT
 - [ ] g) Top 5 län by approved applications
 - [ ] h) Share of distance vs classroom per area
 - [ ] i) Number of programs containing "AI"
@@ -35,16 +36,7 @@ Key insight: The Skool wants to understand the **competitive landscape**: which
 areas and programs are most likely to get funded, and who the competition is.
 
 ## Uppgift 3 – Datadrivna beslut
-Code: [sql/04_u3_own_questions.sql](sql/04_u3_own_questions.sql)
-- [x] **Fråga 1: Approval rate per education area.**
-  Why it matters: raw counts show where providers compete, but the approval *rate*
-  shows where MYH actually says yes. Data/IT gets many applications (220) but only
-  **14% approval**, compared to ~39% on average and ~53% for Teknik.
-  This suggests MYH judges employers' need for more Data/IT programs to be limited.
-  Note: small areas (e.g. Juridik, 4 applications) have too few data points for a
-  reliable rate.
-- [ ] Fråga 2: ...
-- [ ] Fråga 3: ...
+Code: [sql/Uppgift_3.sql](sql/Uppgift_3.sql)
 
 ## Uppgift 4 – Datamodell (BONUS)
 - [ ] Implement the data model (split the flat table into smaller tables)
@@ -62,25 +54,11 @@ Code: [sql/04_u3_own_questions.sql](sql/04_u3_own_questions.sql)
 - SQLcl (for `LOAD` and running scripts)
 - VS Code with Remote-SSH + Oracle SQL Developer extension
 
-## How to run
-1. Start Oracle Database (Podman) and connect with SQLcl or SQL Developer.
-2. Change the CSV path in [sql/01_load_data.sql](sql/01_load_data.sql) to where you
-   cloned this repo.
-3. Run the scripts in order:
-   1. `01_load_data.sql`: loads the raw CSV (expect `COUNT(*) = 1184`)
-   2. `02_clean_data.sql`: trims extra spaces from text columns
-   3. `03_u1_eda.sql`: Uppgift 1
-   4. `04_u3_own_questions.sql`: Uppgift 3
-
-Note: `DROP TABLE IF EXISTS` requires Oracle 23ai or later.
-The raw CSV is never modified; the scripts rebuild the cleaned table from it.
-
 ## LLM usage
 LLM (Claude) used as a sounding board ("bollplank"), noted in each file where used:
 - Environment setup (Podman mount, VS Code connection)
-- [01_load_data.sql](sql/01_load_data.sql): load script drafted with LLM, reviewed by me
-- [02_clean_data.sql](sql/02_clean_data.sql): blocks 5–18 generated from my own
-  4-column pattern
+- [sql/Uppgift_0.sql](sql/Uppgift_0.sql): load script drafted with LLM, reviewed by me;
+  cleaning blocks 5–18 generated from my own 4-column pattern
 - `.gitignore`: created together with LLM, decided Vim will not be needed since it can clash down the line by ignoring stuff that I might want to show.
 - Explanations of concepts (DROP TABLE IF EXISTS, UTF-8 vs CSV, operator order)
 
