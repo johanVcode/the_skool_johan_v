@@ -38,3 +38,24 @@ ORDER BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN;
 -- why it was showing everything reults that where duplicates when not needed to clean it up. 
 -- claude LLM suggested that i put UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; because its A -> Z because its not a numerical value
 -- and DESC; is not needed. THIS IS A HUGE KNOWLEDGE GAP AND I WILL READ MORE THOROUGLY ABOUT IT
+
+-- TOP 5 LÄN BY APPROVED APPLICATION
+-- Uppgift 1
+-- g)
+SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD FROM MYH_TABELL_2025
+WHERE BESLUT = 'Beviljad'
+GROUP BY BESLUT, LÄN
+ORDER BY ANTAL_BEVILJAD DESC
+FETCH FIRST 5 ROWS ONLY; 
+-- knew there was a command to take only the TOP by a value, and could write a simple code block 
+-- that took BESLUT with the text 'Beviljad' and counted those up, with a bouncer called WHERE.
+
+-- Uppgift 1
+-- h). Distans vs Bunden
+
+SELECT STUDIEFORM, COUNT(*) AS ANTAL_ANSÖKNINGAR FROM MYH_TABELL_2025
+    COUNT(CASE WHEN STUDIEFORM = 'Bunden' THEN 1 END) AS ANTAL_BUNDEN
+    COUNT(CASE WHEN STUDIEFORM = 'Distans' THEN 1 END) AS ANTAL_DISTANS
+FROM MYH_TABELL_2025
+GROUP BY 
+ORDER BY 
