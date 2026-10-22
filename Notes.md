@@ -1,10 +1,11 @@
-# Task 0
+# My Notes
 ## The setup
 * Created repo the_skool_johan_v (kept johan_v instead of full name, for privacy)
 * .gitignore: secrets (.env, *.env), nano *.save, OS files. Removed the Vim section because its pattern could match .sql files
 * Per-repo deploy key + SSH alias github-the_skool_johan_v, write access ticked, tested with ssh -T
 * Added IdentitiesOnly yes so each alias only uses its own key
 * git init → commit → branch -M main → remote add origin → push -u
+* added 00_scratch_data.sql to .gitignore (LLM suggested i keep it intentionally ignored rather then showing every SQL command that fails, keep it clean)
 
 ## Data
 * Downloaded "resultat ansökningsomgång 2025 from MYH
