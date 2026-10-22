@@ -1,8 +1,10 @@
--- Dialect: Oracle Database
+-- Oracle Database
 -- Purpose: load MYH application results 2025 (Tabell 3) into one flat table
--- LLM note: load script drafted with LLM assistance (Claude), reviewed by me.
+-- LLM note: load script drafted with LLM assistance (Claude), reviewed by me. 
 
-DROP TABLE IF EXISTS myh_tabell_2025;
+-- Drop the old table first so the script can be rerun from scratch
+-- IF EXISTS: no error on the very first run, when the table doesn't exist
+DROP TABLE IF EXISTS MYH_TABELL_2025;
 
 -- got corrected, apparently UTF-8 encoding keeps å/ä/ö but data in CSV will keep the data in plain text. 
 -- (its a gap in my knowledge, and thought CSV was the thing that allowed å/ä/ö)

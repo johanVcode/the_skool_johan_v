@@ -21,7 +21,11 @@
   in the database the same thing is called a column.)
 * tought could be a good idea to keep every header as a select, was a lot of writing and copy pasting in the end.
 * used the LLM to write the rest for me as to get it fast
-
+* DROP TABLE IF EXISTS: been using it mostly out of habit but never understood it, so googled and
+  asked the LLM. DROP wipes the old table so the scripts can be rerun from scratch (re-runnable).
+  IF EXISTS stops an error on the very first run, when there's no table yet.
+* Bigger picture: the original CSV is never touched. The scripts (01 load → 02 clean) are a
+  trail of instructions that rebuild the cleaned table from the raw data (reproducibility).
 
 ## Oracle infra (dataset)
 * moved the setup out of SQL_1 into its own folder instead to organize and link to diffrent projects.
