@@ -21,17 +21,9 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - [x] d) Approved per program name within Data/IT
 - [x] e) Rejected per program name within Data/IT
 - [x] f) Approved per provider + program name within Data/IT
-- [ ] g) Top 5 län by approved applications
+- [x] g) Top 5 län by approved applications
 - [ ] h) Share of distance vs classroom per area
 - [ ] i) Number of programs containing "AI"
-**Finding a–c:** Ekonomi (239), Teknik (221) and Data/IT (220) get the most
-applications, but Data/IT has by far the fewest approvals (31 of 220).
-The top 5 areas hold 987 of 1184 applications (~83%).
- 
-**Finding d–f:** Only 31 Data/IT programs were approved. Nackademin has 7 of them,
-the most of any provider. Many approved programs are security-related.
-Note: some program names differ only in spelling/casing (`Data engineer` vs `Data Engineer`),
-so counts per name can be split.
  
 ## Uppgift 2 – Intervju
 - [x] Interview with domain expert
