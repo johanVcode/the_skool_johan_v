@@ -14,6 +14,13 @@
 * Checked the bottoom for footnotes: there was none. (the LLM suggested i did this, so adding this to my checks)
 * 1185 rows while 1 is just the header, so in total 1184 rows of data.
 * moved the files with scp protokol from powershell.
+* called the whole table myh_tabell_2025 for easy connection with sql command lines
+* F5 i can run the data and check my scratch draft and if it works i can drop it in 02_clean_data.sql
+* Learned from the dlorg class: `SELECT column FROM table` picks one column by its name,
+  e.g. `SELECT UTBILDNINGSOMRÅDE FROM MYH_TABELL_2025`. (In the CSV it was a header;
+  in the database the same thing is called a column.)
+* tought could be a good idea to keep every header as a select, was a lot of writing and copy pasting in the end.
+* used the LLM to write the rest for me as to get it fast
 
 
 ## Oracle infra (dataset)
@@ -21,7 +28,7 @@
 * re-pointed orac symlink.
 * fresh volume oracle_oradata, removed the old one. Password is now in one place.
 * Projects moved to ~/projects
-
-* Learned that oracle in full, needs a file in the folder of the project to mount everything inside its folder.
+* Learned that oracles sqlcl, has a name for its connection called /scripts to show whole projects so for example ~/projects (on the VM) = /scripts (inside the container) 
+to show where i keep all my projects (OBS: /scripts is not a folder nor a temp folder, just a marker), will later be changed to specific folder to go a clean 0 trust baseline again, mostly for frictionless testing.
 * My first connect failed with 'orac ~/oracle/hello.pls' and error code ORA-12514. Because oracle needed time to start up and 
 sometimes it does checks before everything is set, so it connected to early. 
