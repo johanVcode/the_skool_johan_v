@@ -1,6 +1,6 @@
 -- group by and count whats most populer, maybe we can add compares with other headers??
 
--- experimented after a while from finding the solution of line 13 to line 27
+-- experimented after a while from finding the solution in my scratch file
 -- and thought what if we can use 1 command block instead of many? checked to add more counts to the questions so in short 
 -- we can pack it more densely and use the same SELECT instead of many blocks 
 -- COUNT can be used as many times since every condition is still seperate, and doesnt mix with other counts
@@ -21,7 +21,7 @@ SELECT UTBILDNINGSNAMN, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS DATA_IT_BEVILJAD, -- d)
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS DATA_IT_AVSLAG -- e)
 FROM MYH_TABELL_2025
-WHERE UTBILDNINGSOMRÅDE = 'Data/IT' -- filter out the "Data/IT" so its the only thing being counted.
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT' -- keep only "Data/IT" so its the only thing being counted.
 GROUP BY UTBILDNINGSNAMN
 ORDER BY ANTAL_ANSÖKNINGAR DESC;
 
@@ -34,8 +34,8 @@ WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
     AND BESLUT = 'Beviljad'
 GROUP BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN
 ORDER BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; 
--- ORDER BY ANTAL_BEVILJAD DESC; was my last attempt, but apparently it was wrong, and couldnt figure it out
--- why it was showing everything reults that where duplicates when not needed to clean it up. 
+-- ORDER BY ANTAL_BEVILJAD DESC; was my last attempt, it wasnt wrong per say, all counts were 1 so sorting by it did nothing
+-- the "duplicates" were not duplicates, each row is a different program from the same provider.
 -- claude LLM suggested that i put UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; because its A -> Z because its not a numerical value
 -- and DESC; is not needed. THIS IS A HUGE KNOWLEDGE GAP AND I WILL READ MORE THOROUGLY ABOUT IT
 
@@ -49,6 +49,7 @@ ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
 -- knew there was a command to take only the TOP by a value, and could write a simple code block 
 -- that took BESLUT with the text 'Beviljad' and counted those up, with a bouncer called WHERE.
+-- ORDER BY fixed with LLM help: top = sort by the count DESC, not by LÄN
 
 -- Uppgift 1
 -- h). Distans vs Bunden
@@ -58,4 +59,4 @@ SELECT STUDIEFORM, COUNT(*) AS ANTAL_ANSÖKNINGAR FROM MYH_TABELL_2025
     COUNT(CASE WHEN STUDIEFORM = 'Distans' THEN 1 END) AS ANTAL_DISTANS
 FROM MYH_TABELL_2025
 GROUP BY 
-ORDER BY 
+ORDER BY
