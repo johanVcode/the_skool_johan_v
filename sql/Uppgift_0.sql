@@ -24,8 +24,6 @@ SELECT COUNT(*) FROM myh_tabell_2025;
 
 ----
 
---clean data goes here.
-
 -- Clean check: find text values with leading/trailing spaces.
 -- Skipped number columns (8, 11, 13, 15, 19–28): numbers can't hold spaces,
 -- and TRIM would just turn them into text and back to a number again = double work, same result.

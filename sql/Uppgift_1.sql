@@ -1,5 +1,3 @@
---queries goes here
-
 -- group by and count whats most populer, maybe we can add compares with other headers??
 
 -- experimented after a while from finding the solution of line 13 to line 27
