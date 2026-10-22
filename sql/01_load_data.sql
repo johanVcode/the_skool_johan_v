@@ -4,9 +4,15 @@
 
 DROP TABLE IF EXISTS myh_tabell_2025;
 
-SET LOADFORMAT CSV -- format im loading the table in, csv so it can take å/ä/ö
-SET LOAD SCAN_ROWS 2000 -- added 2000 rows because there was a problem with 100_000 for some reason so kept it simple
+-- got corrected, apparently UTF-8 encoding keeps å/ä/ö but data in CSV will keep the data in plain text. 
+-- (its a gap in my knowledge, and thought CSV was the thing that allowed å/ä/ö)
+SET LOADFORMAT CSV
+
+-- added 2000 rows because there was a problem with 100_000 for some reason so kept it simple
+SET LOAD SCAN_ROWS 2000
+
+-- loading the table to the oracle database
 LOAD TABLE myh_tabell_2025 '/home/bunk.moreland/projects/the_skool_johan_v/data/resultat_2025_tabell3.csv' NEW
 
--- simple sanity check of the table numbered.
+-- simple sanity check of the table numbered, minus the header. 1184 
 SELECT COUNT(*) FROM myh_tabell_2025;
