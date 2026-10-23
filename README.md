@@ -1,8 +1,12 @@
 # The Skool – SQL analysis of MYH applications 2025
- 
-Analysis of MYH's 2025 application round (Tabell 3, programs starting 2026) to help
-the education provider **The Skool** make data-driven decisions about which programs
-to apply for.
+
+My first SQL analysis project: loading MYH's 2025 application results into
+Oracle Database and answering questions with SQL, to help the education
+provider The Skool decide which programs to apply for.
+
+> **Kept as submitted.** This was my first SQL analysis project, and I've
+> left it exactly as I handed it in, mistakes included, so you can see where
+> I started. What I'd do differently today is listed at the bottom.
  
 ## Uppgift 0 – Uppvärmning
 Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
