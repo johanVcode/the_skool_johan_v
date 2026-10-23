@@ -54,7 +54,7 @@ FETCH FIRST 5 ROWS ONLY;
 -- Uppgift 1
 -- h). Distans vs Bunden
 
--- went originally STUDIEFORM everywhere, but the LLM pointed out that i was thinking in wrong buckets. but right code.
+-- went originally STUDIEFORM everywhere, but the LLM pointed out that i was using the wrong one. but right code.
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN STUDIEFORM = 'Bunden' THEN 1 END) AS ANTAL_BUNDEN,
     COUNT(CASE WHEN STUDIEFORM = 'Distans' THEN 1 END) AS ANTAL_DISTANS,
@@ -79,3 +79,10 @@ WHERE STUDIEFORM = 'Bunden'
 GROUP BY STUDIEFORM;
 
 ----
+
+--Uppgift 1
+-- i). AI counted
+SELECT COUNT(*) AS ANTAL_AI FROM MYH_TABELL_2025
+WHERE UTBILDNINGSNAMN LIKE '%AI%' OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%';
+--Dont need specifics just count all lines 
+--add a bouncer WHERE UTBILDNINGSNAMN with a specific filter LIKE '%WORD%'

@@ -13,6 +13,7 @@ Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - [x] e) Load into Oracle: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - [x] f) One script per task: see the [sql/](sql/) folder
 - [x] Extra: data cleaning (130 values with extra spaces), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
+
 ## Uppgift 1 – Grundläggande EDA
 Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - [x] a) Applications per education area, sorted most first
@@ -22,8 +23,8 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - [x] e) Rejected per program name within Data/IT
 - [x] f) Approved per provider + program name within Data/IT
 - [x] g) Top 5 län by approved applications
-- [ ] h) Share of distance vs classroom per area
-- [ ] i) Number of programs containing "AI"
+- [x] h) Share of distance vs classroom per area
+- [X] i) Number of programs containing "AI"
  
 ## Uppgift 2 – Intervju
 - [x] Interview with domain expert
