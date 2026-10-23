@@ -6,25 +6,25 @@ to apply for.
  
 ## Uppgift 0 – Uppvärmning
 Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
-- [x] a) Repo: `the_skool_johan_v` (surname shortened for privacy)
-- [x] b) [.gitignore](.gitignore)
-- [x] c) Data from MYH: [data/resultat-ansokningsomgang-2025.xlsx](data/resultat-ansokningsomgang-2025.xlsx)
-- [x] d) Only Tabell 3 kept: [data/resultat_2025_tabell3.csv](data/resultat_2025_tabell3.csv)
-- [x] e) Load into Oracle: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
-- [x] f) One script per task: see the [sql/](sql/) folder
-- [x] Extra: data cleaning (130 values with extra spaces), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
+- ✅ a) Repo: `the_skool_johan_v` (surname shortened for privacy)
+- ✅ b) [.gitignore](.gitignore)
+- ✅ c) Data from MYH: [data/resultat-ansokningsomgang-2025.xlsx](data/resultat-ansokningsomgang-2025.xlsx)
+- ✅ d) Only Tabell 3 kept: [data/resultat_2025_tabell3.csv](data/resultat_2025_tabell3.csv)
+- ✅ e) Load into Oracle: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
+- ✅ f) One script per task: see the [sql/](sql/) folder
+- ✅ Extra: data cleaning (130 values with extra spaces), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 
 ## Uppgift 1 – Grundläggande EDA
 Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
-- [x] a) Applications per education area, sorted most first
-- [x] b) Approved applications per education area
-- [x] c) Rejected applications per education area
-- [x] d) Approved per program name within Data/IT
-- [x] e) Rejected per program name within Data/IT
-- [x] f) Approved per provider + program name within Data/IT
-- [x] g) Top 5 län by approved applications
-- [x] h) Share of distance vs classroom per area
-- [x] i) Number of programs containing "AI"
+- ✅ a) Applications per education area, sorted most first [a)-c)](sql/Uppgift_1.sql#L11-L16)
+- ✅ b) Approved applications per education area [a)-c)](sql/Uppgift_1.sql#L11-L16)
+- ✅ c) Rejected applications per education area [a)-c)](sql/Uppgift_1.sql#L11-L16)
+- ✅ d) Approved per program name within Data/IT [d)-e)](sql/Uppgift_1.sql#L20-L26)
+- ✅ e) Rejected per program name within Data/IT [d)-e)](sql/Uppgift_1.sql#L20-L26)
+- ✅ f) Approved per provider + program name within Data/IT [f)](sql/Uppgift_1.sql#L31-L36)
+- ✅ g) Top 5 län by approved applications [g)](sql/Uppgift_1.sql#L45-L49)
+- ✅ h) Share of distance vs classroom per area [h)](sql/Uppgift_1.sql#L58-L65)
+- ✅ i) Number of programs containing "AI" [i)](sql/Uppgift_1.sql#L85-L86)
  
 ## Uppgift 2 – Intervju
 - [x] Interview with domain expert
