@@ -5,16 +5,16 @@
 ### Nano ###
 *.save
 
+### Scratch ###
+# Personal testing/playground file for trying queries; intentionally not tracked
+00_scratch_data.sql
+
 ### Linux ###
 *~
 .fuse_hidden*
 .directory
 .Trash-*
 .nfs*
-
-### Scratch ###
-# Personal testing/playground file for trying queries; intentionally not tracked
-00_scratch_data.sql
 
 ### macOS ###
 .DS_Store
@@ -45,4 +45,6 @@ ehthumbs_vista.db
 $RECYCLE.BIN/
 *.lnk
 
-# Created togheter with claude LLM
+# added linux, macOS and Windows, with gitignore.io, also added scratch file name since its a playground. 
+# nano was the one LLM suggested i added.
+# LLM also suggested i removed VIM since it can add complications.
