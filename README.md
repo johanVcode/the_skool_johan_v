@@ -27,24 +27,24 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - ✅ i) Number of programs containing "AI" [i)](sql/Uppgift_1.sql#L85-L86)
  
 ## Uppgift 2 – Intervju
-- [x] Interview with domain expert
+- ✅ Interview with domain expert
 
 Key insight: The Skool wants to understand the **competitive landscape**: which
 areas and programs are most likely to get funded, and who the competition is.
  
 ## Uppgift 3 – Datadrivna beslut
-- [ ] Not started yet (planned file: `sql/Uppgift_3.sql`)
+- ⬜ Not started yet (planned file: `sql/Uppgift_3.sql`)
 
 ## Uppgift 4 – Datamodell (BONUS)
-- [ ] Implement the data model (split the flat table into smaller tables)
-- [ ] Answer the Uppgift 1 questions again using the new tables
+- ⬜ Implement the data model (split the flat table into smaller tables)
+- ⬜ Answer the Uppgift 1 questions again using the new tables
 
 ## Uppgift 5 – README
-- [x] This file
+- ✅ This file
 
 ## Uppgift 6 – Video + slides
-- [ ] Presentation (PDF): ...
-- [ ] Video (5–10 min): ...
+- ⬜ Presentation (PDF): ...
+- ⬜ Video (5–10 min): ...
 
 ## Tools
 - Oracle Database 26ai Free (run in rootless Podman on Oracle Linux 10)
