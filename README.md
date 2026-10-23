@@ -8,7 +8,7 @@ to apply for.
 Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - [x] a) Repo: `the_skool_johan_v` (surname shortened for privacy)
 - [x] b) [.gitignore](.gitignore)
-- [x] c) Data from MYH: [screenshot](screenshots/myh_source_2025.png)
+- [x] c) Data from MYH: [data/resultat-ansokningsomgang-2025.xlsx](data/resultat-ansokningsomgang-2025.xlsx)
 - [x] d) Only Tabell 3 kept: [data/resultat_2025_tabell3.csv](data/resultat_2025_tabell3.csv)
 - [x] e) Load into Oracle: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - [x] f) One script per task: see the [sql/](sql/) folder
@@ -24,31 +24,38 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - [x] f) Approved per provider + program name within Data/IT
 - [x] g) Top 5 län by approved applications
 - [x] h) Share of distance vs classroom per area
-- [X] i) Number of programs containing "AI"
+- [x] i) Number of programs containing "AI"
  
 ## Uppgift 2 – Intervju
 - [x] Interview with domain expert
+
 Key insight: The Skool wants to understand the **competitive landscape**: which
 areas and programs are most likely to get funded, and who the competition is.
  
 ## Uppgift 3 – Datadrivna beslut
 - [ ] Not started yet (planned file: `sql/Uppgift_3.sql`)
+
 ## Uppgift 4 – Datamodell (BONUS)
 - [ ] Implement the data model (split the flat table into smaller tables)
 - [ ] Answer the Uppgift 1 questions again using the new tables
+
 ## Uppgift 5 – README
 - [x] This file
+
 ## Uppgift 6 – Video + slides
 - [ ] Presentation (PDF): ...
 - [ ] Video (5–10 min): ...
+
 ## Tools
 - Oracle Database 26ai Free (run in rootless Podman on Oracle Linux 10)
 - SQLcl (for `LOAD` and running scripts)
 - VS Code with Remote-SSH + Oracle SQL Developer extension
+
 ## How to run
 1. Start Oracle Database (Podman) and connect with SQLcl or SQL Developer.
 2. Change the CSV path in [sql/Uppgift_0.sql](sql/Uppgift_0.sql) to where you cloned this repo.
 3. Run `Uppgift_0.sql` (load + clean, expect `COUNT(*) = 1184`), then `Uppgift_1.sql`.
+
 Note: `DROP TABLE IF EXISTS` requires Oracle 23ai or later.
 The raw CSV is never modified; the scripts rebuild the table `MYH_TABELL_2025` from it.
  
@@ -57,9 +64,11 @@ LLM (Claude) used as a sounding board ("bollplank"), noted in each file where us
 - Environment setup (Podman mount, VS Code connection)
 - [sql/Uppgift_0.sql](sql/Uppgift_0.sql): load script drafted with LLM, reviewed by me;
   cleaning blocks 5–18 generated from my own 4-column pattern
-- [sql/Uppgift_1.sql](sql/Uppgift_1.sql): f) sorting fix (ORDER BY provider, program) suggested by LLM
-- `.gitignore`: created together with LLM, decided Vim will not be needed since it can clash down the line by ignoring stuff that I might want to show.
-- Explanations of concepts (DROP TABLE IF EXISTS, UTF-8 vs CSV, operator order)
+- [sql/Uppgift_1.sql](sql/Uppgift_1.sql): f) sorting fix (ORDER BY provider, program) suggested by LLM;
+  g) ORDER BY fix (sort by count DESC); i) false-positive note (lowercase "ai" matches sustAInable etc.)
+- `.gitignore`: added linux, macOS and Windows, with gitignore.io, also added scratch file name since its a playground.
+  nano was suggested was added and vim removed since it can add complications down the road.
+
 ## Sources
 - MYH: resultat ansökningsomgång 2025
 - Course material: [oracle_sql_course](https://github.com/AIgineerAB/oracle_sql_course)
