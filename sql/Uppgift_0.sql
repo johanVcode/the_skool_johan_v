@@ -6,7 +6,7 @@
 -- e)
 
 -- Drop the old table first so the script can be rerun from scratch
--- IF EXISTS: no error on the very first run, when the table doesn't exist.alter
+-- IF EXISTS: no error on the very first run, when the table doesn't exist.
 DROP TABLE IF EXISTS MYH_TABELL_2025;
 
 -- got corrected, CSV is the file format; UTF-8 is the encoding that supports å/ä/ö.
