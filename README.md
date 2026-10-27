@@ -31,10 +31,39 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - ✅ i) Number of programs containing "AI" [i)](sql/Uppgift_1.sql#L85-L86)
  
 ## Uppgift 2 – Intervju
-- ✅ Interview with domain expert
+- ✅ Interview with domain expert (2026-10-21): our course teacher, playing a
+  representative of The Skool, a fictional education provider used as the case for this lab.
 
-Key insight: The Skool wants to understand the **competitive landscape**: which
-areas and programs are most likely to get funded, and who the competition is.
+**Key insight:** The Skool wants to understand the **competitive landscape**:
+which areas and programs are most likely to get funded, who the competition is,
+and where a new academy can find an edge.
+
+### What The Skool wants
+- Compare Bunden and Distans: classroom vs distance, i.e. digital.
+- See the competitive landscape: which providers apply, and in which areas.
+
+### Open questions
+- It costs a lot of money to apply, so they need to know what to apply for.
+- Data/IT is applied for a lot, and the expert thinks parts of it are already full.
+  As a new academy, maybe we can look at other areas within Data/IT, or other programs.
+- Can we make a course more attractive with more AI-related programming?
+- Differences between Distans and Bunden: is the approval rate higher for one of them?
+
+### How it connects to the data
+- Baseline: 1184 applications. Every area is compared against this.
+  - 462 approved (39%)
+  - 721 denied (61%)
+  - 1 withdrawn (0.1%). I checked `BESLUT` for values other than approved
+    and denied, and found this one.
+- Approval rate per area: `BESLUT` per `UTBILDNINGSOMRÅDE`, always shown with counts.
+- Niches within Data/IT: grouped by `SUN5_INRIKTNING`. I chose the code over
+  `SUN5_INRIKTNING_NAMN` because names can be misspelled in many ways (human error).
+- Competitors: `UTBILDNINGSANORDNARE_ADMINISTR`.
+- AI: `UTBILDNINGSNAMN`.
+- Distans vs Bunden: `STUDIEFORM`.
+- Tabell 4 is only needed to find which län the "Flera kommuner" applications run in.
+
+my notes from the interview, supplemented with a classmate's shared notes. 
  
 ## Uppgift 3 – Datadrivna beslut
 - ⬜ Not started yet (planned file: `sql/Uppgift_3.sql`)
@@ -72,6 +101,7 @@ LLM (Claude) used as a sounding board ("bollplank"), noted in each file where us
   g) ORDER BY fix (sort by count DESC); i) false-positive note (lowercase "ai" matches sustAInable etc.)
 - `.gitignore`: added linux, macOS and Windows, with gitignore.io, also added scratch file name since its a playground.
   nano was suggested was added and vim removed since it can add complications down the road.
+- Uppgift 2: wording and structure tidied with LLM help; the content is from my interview notes.
 
 ## Sources
 - MYH: resultat ansökningsomgång 2025
