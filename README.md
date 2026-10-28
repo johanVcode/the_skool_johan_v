@@ -66,7 +66,7 @@ and where a new academy can find an edge.
 my notes from the interview, supplemented with a classmate's shared notes. 
  
 ## Uppgift 3 – Datadrivna beslut
-- ⬜ Not started yet (planned file: `sql/Uppgift_3.sql`)
+- ✅ Not started yet (planned file: `sql/Uppgift_3.sql`)
 
 ## Uppgift 4 – Datamodell (BONUS)
 - ⬜ Implement the data model (split the flat table into smaller tables)
