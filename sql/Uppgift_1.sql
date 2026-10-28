@@ -50,6 +50,52 @@ FETCH FIRST 5 ROWS ONLY;
 -- knew there was a command to take only the TOP by a value, and could write a simple code block 
 -- that took BESLUT with the text 'Beviljad' and counted those up, with a bouncer called WHERE.
 -- ORDER BY fixed with LLM help: top = sort by the count DESC, not by LÄN
+-- We where told to only use tabell 3 but there are important data coming from tabell 4 that explains 
+-- the notations of "Flera kommuner" so improved the query, check below
+
+-- SANITYCHECK - each table 
+
+SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD 
+FROM MYH_TABELL_2025
+WHERE ANTAL_KOMMUNER = 1
+    AND BESLUT = 'Beviljad'
+GROUP BY BESLUT, LÄN
+ORDER BY ANTAL_BEVILJAD DESC
+FETCH FIRST 5 ROWS ONLY; 
+
+-- Stockholm 89 Beviljad
+-- Västra Götaland 89 Beviljad
+-- Skåne 45 Beviljad
+-- more listed
+
+SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD FROM MYH_TABELL4_2025
+WHERE BESLUT = 'Beviljad'
+GROUP BY BESLUT, LÄN
+ORDER BY ANTAL_BEVILJAD DESC
+FETCH FIRST 5 ROWS ONLY; 
+
+-- Stockholm 48 Beviljad
+-- Västra Götaland 36 Beviljad
+-- Skåne 32 Beviljad
+
+SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD 
+FROM (
+    SELECT BESLUT, LÄN FROM MYH_TABELL4_2025
+    UNION ALL
+    SELECT BESLUT, LÄN FROM MYH_TABELL_2025 WHERE ANTAL_KOMMUNER = 1
+)
+WHERE BESLUT = 'Beviljad'
+GROUP BY BESLUT, LÄN
+ORDER BY ANTAL_BEVILJAD DESC
+FETCH FIRST 5 ROWS ONLY; 
+
+-- Stockholm 89 + 48 = 137
+-- Västra Götaland 89 + 36 = 125
+-- Skåne 45 + 32 = 77 
+
+-- LLM pointed out that there are duplicates, i can maybe use DIARIENUMMER as a unique identifier?
+-- Will come back to this later
+
 
 -- Uppgift 1
 -- h). Distans vs Bunden
@@ -82,12 +128,19 @@ GROUP BY STUDIEFORM;
 
 --Uppgift 1
 -- i). AI counted
-SELECT UTBILDNINGSNAMN, COUNT(*) AS ANTAL_AI,
+SELECT COUNT(*) AS ANTAL_AI
 FROM MYH_TABELL_2025
-WHERE UTBILDNINGSNAMN LIKE '%AI%'
-    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%'
-    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIELL INTELLIGENS%'
-GROUP BY UTBILDNINGSNAMN
-ORDER BY UTBILDNINGSNAMN DESC;
---Dont need specifics just count all lines 
---add a bouncer WHERE UTBILDNINGSNAMN with a specific filter LIKE '%WORD%'
+WHERE UTBILDNINGSNAMN LIKE '%AI%' --48 on its own
+    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%' --adds 0, total still 48
+    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIELL INTELLIGENS%'; --adds 0, total still 48
+-- After doing the Uppgift_3 SANITY CHECK/BASELINE, I got an idea to further improve
+-- this code block: adding 2 ORs and making use of ARTIFICIELL INTELLIGENS,
+-- because AI can be written in different ways, especially in a different language.
+
+/* Old Version, before adding ARTIFICIELL INTELLIGENS:
+SELECT COUNT(*) AS ANTAL_AI
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSNAMN LIKE '%AI%' OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%'
+Don't need specifics, just count all lines
+add a bouncer WHERE UTBILDNINGSNAMN with a specific filter LIKE '%WORD%'
+*/ 
