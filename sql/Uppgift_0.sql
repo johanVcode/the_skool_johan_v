@@ -33,6 +33,7 @@ SELECT COUNT(DISTINCT DIARIENUMMER) FROM MYH_TABELL4_2025;
 ----
 
 -- TABELL 4
+
 -- 9th is skipped its a number value, its always the number nothing else
 -- created by me, was mostly copy pasting and changed FROM
 
@@ -102,6 +103,7 @@ SET KOMMUN = TRIM(KOMMUN)
 WHERE KOMMUN <> TRIM(KOMMUN);
 
 -- TABELL 3
+
 -- Clean check: find text values with leading/trailing spaces.
 -- Skipped number columns (8, 11, 13, 15, 19–28): numbers can't hold spaces,
 -- and TRIM would just turn them into text and back to a number again = double work, same result.
