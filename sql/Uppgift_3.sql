@@ -101,6 +101,53 @@ ORDER BY BEVILJAD_PROCENT DESC;
 
 -- Question 4: Which providers apply most within Data/IT, and what is their approval rate?
 
+-- SANITY CHECK / BASELINE
+SET PAGESIZE 100
+SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_DATA_IT,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / count(*), 2) AS BEVILJAD_PROCENT
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
+GROUP BY UTBILDNINGSOMRÅDE
+ORDER BY ANTAL_DATA_IT DESC;
+
+-- Data/IT baseline: 220 applications, 31 approved (14.09%).
+
+---
+
+-- Top 10 providers by number of Data/IT applications
+SELECT UTBILDNINGSANORDNARE_ADMINISTR, COUNT(*) AS ANTAL_DATA_IT,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / count(*), 2) AS BEVILJAD_PROCENT
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
+GROUP BY UTBILDNINGSANORDNARE_ADMINISTR
+ORDER BY ANTAL_DATA_IT DESC
+FETCH FIRST 10 ROWS ONLY;
+
+-- Nackademin has the highest approval rate among the top appliers: 7 of 12 (58.33%), well above the baseline.
+-- Jensen Education has the most applications (15, three more than Nackademin) but 0 approved (0%), far below the baseline.
+
+---
+
+-- Top 10 providers by number of approved Data/IT applications
+SELECT UTBILDNINGSANORDNARE_ADMINISTR, COUNT(*) AS ANTAL_DATA_IT,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0 / count(*), 2) AS BEVILJAD_PROCENT
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
+GROUP BY UTBILDNINGSANORDNARE_ADMINISTR
+ORDER BY ANTAL_BEVILJAD DESC, ANTAL_DATA_IT DESC
+FETCH FIRST 10 ROWS ONLY;
+
+-- Sorted by approvals first, then by number of applications.
+-- Some providers have a 100% approval rate on very few applications, which can be misleading,
+-- so the number of applications is shown next to the approvals.
+
+-- CONCLUSION:
+-- Jensen applies the most but gets nothing approved. Nackademin is the most successful:
+-- 7 of 12 (58.33%), about 4x the baseline. Applying more does not mean getting approved more.
+
 ---
 
 -- Question 5: Do programs with AI in the name get approved more often than others?
