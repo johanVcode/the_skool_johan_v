@@ -16,11 +16,18 @@ SET LOADFORMAT CSV
 -- added 2000 rows because there was a problem with 100_000 for some reason so kept it simple
 SET LOAD SCAN_ROWS 2000
 
+-- cleaner look
+SET PAGESIZE 200
+
 -- loading the table to the oracle database
-LOAD TABLE MYH_TABELL_2025 '/home/bunk.moreland/projects/the_skool_johan_v/data/resultat_2025_tabell3.csv' NEW
+LOAD TABLE MYH_TABELL_2025  '/home/bunk.moreland/projects/the_skool_johan_v/data/resultat_2025_tabell3.csv' NEW
+LOAD TABLE MYH_TABELL4_2025 '/home/bunk.moreland/projects/the_skool_johan_v/data/resultat_2025_tabell4.csv' NEW
 
 -- simple sanity check of the table numbered, minus the header. 1184 
 SELECT COUNT(*) FROM MYH_TABELL_2025;
+SELECT COUNT(DISTINCT DIARIENUMMER) FROM MYH_TABELL_2025;
+SELECT COUNT(*) FROM MYH_TABELL4_2025;
+SELECT COUNT(DISTINCT DIARIENUMMER) FROM MYH_TABELL4_2025;
 
 ----
 
