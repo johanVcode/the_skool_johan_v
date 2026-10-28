@@ -1,5 +1,5 @@
 -- Oracle Database
--- Purpose: load MYH application results 2025 (Tabell 3) into one flat table
+-- Purpose: load MYH application results 2025 Tabell 3 & 4 for Uppgift_1 g
 -- LLM note: load script drafted with LLM assistance (Claude), reviewed by me. 
 
 -- Uppgift 0
@@ -8,6 +8,7 @@
 -- Drop the old table first so the script can be rerun from scratch
 -- IF EXISTS: no error on the very first run, when the table doesn't exist.
 DROP TABLE IF EXISTS MYH_TABELL_2025;
+DROP TABLE IF EXISTS MYH_TABELL4_2025;
 
 -- got corrected, CSV is the file format; UTF-8 is the encoding that supports å/ä/ö.
 -- not everything supports them
