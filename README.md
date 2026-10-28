@@ -66,7 +66,20 @@ and where a new academy can find an edge.
 my notes from the interview, supplemented with a classmate's shared notes. 
  
 ## Uppgift 3 – Datadrivna beslut
-- ✅ Not started yet (planned file: `sql/Uppgift_3.sql`)
+Code: [sql/Uppgift_3.sql](sql/Uppgift_3.sql)
+- ✅ Q1: Approval rate per education area
+- ✅ Q2: Bunden vs Distans. Bunden gets approved more often (42.54% vs 35.02%)
+- ✅ Q3: Niches within Data/IT. IT-säkerhet (481xf) is the most reliable: 21% on 33 applications, above the Data/IT average of 14%
+- ✅ Q4: Providers within Data/IT. Jensen applies the most but got 0 approved; Nackademin got 7 of 12 approved (58%)
+- ✅ Q5: AI in the program name. Approved about 10x less often (4% vs 40%)
+
+**Key insight:** Applying a lot doesn't mean getting approved. Small groups can look
+great by luck, so I always show the number of applications next to the percentage
+and compare against a baseline (the average).
+
+- [sql/Uppgift_3.sql](sql/Uppgift_3.sql): queries and analysis ideas are my own. LLM used for hints on SQL errors,
+  pointing out that Q1/Q2 had swapped queries i made by mistake, suggesting how to structure the findings,
+  the CASE/ELSE hint in Q5, and wording the conclusions and comments.
 
 ## Uppgift 4 – Datamodell (BONUS)
 - ⬜ Implement the data model (split the flat table into smaller tables)

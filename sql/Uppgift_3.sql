@@ -151,3 +151,41 @@ FETCH FIRST 10 ROWS ONLY;
 ---
 
 -- Question 5: Do programs with AI in the name get approved more often than others?
+
+SELECT CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END AS AI_GRUPP, COUNT(*) AS ANTAL_UTBILDNINGSNAMN,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0 / count(*), 2) AS BEVILJAD_PROCENT
+FROM MYH_TABELL_2025
+GROUP BY CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END
+ORDER BY BEVILJAD_PROCENT DESC;
+
+-- Not AI: 1136 applications, 460 approved (40.49%)
+-- AI: 48 applications, 2 approved (4.17%)
+
+--SANITY CHECK/BASELINE
+
+SELECT UTBILDNINGSNAMN, COUNT(*) AS ANTAL_UTBILDNINGSNAMN,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_AI_BEVILJAD
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSNAMN LIKE '%AI%'
+    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%'
+    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIELL INTELLIGENS%'
+GROUP BY UTBILDNINGSNAMN
+ORDER BY ANTAL_UTBILDNINGSNAMN DESC;
+
+-- I knew I could use '%AI%' to find AI in UTBILDNINGSNAMN, but didn't know how to use it in my queries.
+-- Got the idea from the Uppgift_1 i) code block, but didn't understand how to create a "Not AI" group.
+-- I thought I also needed a COUNT(CASE ...) for AI.
+-- Got a hint to use: CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END
+-- It works like LIKE '%AI%' OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%', but with an ELSE that labels everything else.
+-- Writing this also gave me the idea to check for "ARTIFICIAL INTELLIGENCE" and "ARTIFICIELL INTELLIGENS".
+-- Added 2 extra conditions for AI spelled out in 2 different ways (English and Swedish).
+-- Still found only 2 approved AI applications, so the result did not change.
+
+--CONCLUSION
+-- AI programs are approved about 10x less often than others: 4.17% vs 40.49%.
+
+
+-- Uppgift 3: queries and analysis ideas are my own. LLM used for hints on SQL errors, 
+-- pointing out that Q1/Q2 had swapped queries, suggesting 
+-- how to structure the findings, and wording the conclusions and Q4 comments.
