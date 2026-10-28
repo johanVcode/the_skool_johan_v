@@ -43,6 +43,16 @@ WHERE UTBILDNINGSOMRÅDE <> TRIM(UTBILDNINGSOMRÅDE);
 -- matches the SELECT above, so I can verify the fix did exactly what I expected.
 -- On big tables this matters a lot.
 -- This sent me down a rabbit hole: if WHERE makes one UPDATE more efficient,
+-- Lots of copypasting, feels like im not doing work.
+-- Made this col_name template myself afterwards for easy copy-pasting.
+
+-- # col_name
+--SELECT '[' || col_name || ']' FROM MYH_TABELL_2025
+--WHERE col_name <> TRIM(col_name);
+
+--UPDATE MYH_TABELL_2025
+--SET col_name = TRIM(col_name)
+--WHERE col_name <> TRIM(col_name);
 
 -- 2 SUN5_INRIKTNING
 SELECT '[' || SUN5_INRIKTNING || ']' FROM MYH_TABELL_2025
