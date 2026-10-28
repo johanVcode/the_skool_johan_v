@@ -34,8 +34,9 @@ SELECT COUNT(DISTINCT DIARIENUMMER) FROM MYH_TABELL4_2025;
 
 -- TABELL 4
 
--- 9th is skipped its a number value, its always the number nothing else
+-- 9th is skipped its a number value, they dont have spaces.
 -- created by me, was mostly copy pasting and changed FROM
+-- because i added a second table.
 
 -- 1 UTBILDNINGSOMRÅDE
 SELECT '[' || UTBILDNINGSOMRÅDE || ']' FROM MYH_TABELL4_2025
@@ -76,7 +77,6 @@ WHERE BESLUT <> TRIM(BESLUT);
 UPDATE MYH_TABELL4_2025
 SET BESLUT = TRIM(BESLUT)
 WHERE BESLUT <> TRIM(BESLUT);
-
 
 -- 6 DIARIENUMMER
 SELECT '[' || DIARIENUMMER || ']' FROM MYH_TABELL4_2025
