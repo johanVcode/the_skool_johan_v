@@ -155,7 +155,7 @@ LLM (Claude) used as a sounding board ("bollplank"), noted in each file where us
 - README and SQL comments: wording and structure tidied with LLM help.
 
 ## Sources
-- MYH: resultat ansökningsomgång 2025
+- MYH: [Resultat ansökningsomgång 2025](https://www.myh.se/yrkeshogskolan/resultat-ansokningsomgangar/resultat-for-program)
 - Course material: [oracle_sql_course](https://github.com/AIgineerAB/oracle_sql_course)
   (lectures 04 load_csv, 05 filtering, 06 crud, 07 aggregation, 08 strings)
 - Alexander Obregon, Substack: TRIM and the `UPDATE ... WHERE col <> TRIM(col)` pattern
