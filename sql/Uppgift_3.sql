@@ -1,14 +1,12 @@
 -- Uppgift 3 – Datadrivna beslut
 
 -- Baseline: number of applications per education area.
--- SET PAGESIZE 100 stops SQLcl from repeating the column headers mid-result.
+-- SET PAGESIZE 200 stops SQLcl from repeating the column headers mid-result.
 
-SET PAGESIZE 100
+SET PAGESIZE 200
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL FROM MYH_TABELL_2025
 GROUP BY UTBILDNINGSOMRÅDE
 ORDER BY ANTAL DESC;
-
----
 
 -- Question 1: Approval rate per education area
 -- Motivation: applying costs The Skool a lot of money, so they need to know which areas are worth applying for.
