@@ -1,9 +1,9 @@
 # The Skool – SQL analysis of MYH applications 2025
 
-My first SQL analysis project: loading MYH's 2025 application results into
+SQL analysis project: loading MYH's 2025 application results into
 Oracle Database and answering questions with SQL, to help the education
 provider The Skool decide which programs to apply for.
- 
+
 ## Uppgift 0 – Uppvärmning
 Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - ✅ a) Repo: `the_skool_johan_v` (surname shortened for privacy)
@@ -17,19 +17,42 @@ Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - ✅ f) One script per task: see the [sql/](sql/) folder
 - ✅ Extra: data cleaning (extra spaces removed from 130 values in Tabell 3 and 80 in Tabell 4), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 
+The data comes from MYH's "Resultat ansökningsomgång 2025" Excel file (published 2026-01-13).
+Only the sheets Tabell 3 and Tabell 4 were exported to CSV and loaded.
+
+![MYH source file](screenshots/myh_source_2025.png)
+
+The `.gitignore` excludes OS files (Linux, macOS, Windows), editor files and my scratch SQL file,
+so only the finished scripts are in the repo.
+
+![.gitignore](screenshots/gitignore.png)
+
 ## Uppgift 1 – Grundläggande EDA
 Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
-- ✅ a) Applications per education area, sorted most first [a)-c)](sql/Uppgift_1.sql#L11-L16)
-- ✅ b) Approved applications per education area [a)-c)](sql/Uppgift_1.sql#L11-L16)
-- ✅ c) Rejected applications per education area [a)-c)](sql/Uppgift_1.sql#L11-L16)
-- ✅ d) Approved per program name within Data/IT [d)-e)](sql/Uppgift_1.sql#L20-L26)
-- ✅ e) Rejected per program name within Data/IT [d)-e)](sql/Uppgift_1.sql#L20-L26)
-- ✅ f) Approved per provider + program name within Data/IT [f)](sql/Uppgift_1.sql#L31-L36)
-- ✅ g) Top 5 län by approved applications [g)](sql/Uppgift_1.sql#L45-L49)
-- ✅ h) Share of distance vs classroom per area [h)](sql/Uppgift_1.sql#L58-L65)
-- ✅ i) Number of programs containing "AI" [i)](sql/Uppgift_1.sql#L85-L86)
- 
+- ✅ a) Applications per education area, sorted most first [a)-c)](sql/Uppgift_1.sql#L9-L14)
+- ✅ b) Approved applications per education area [a)-c)](sql/Uppgift_1.sql#L9-L14)
+- ✅ c) Rejected applications per education area [a)-c)](sql/Uppgift_1.sql#L9-L14)
+- ✅ d) Approved per program name within Data/IT [d)-e)](sql/Uppgift_1.sql#L18-L24)
+- ✅ e) Rejected per program name within Data/IT [d)-e)](sql/Uppgift_1.sql#L18-L24)
+- ✅ f) Approved per provider + program name within Data/IT [f)](sql/Uppgift_1.sql#L28-L33)
+- ✅ g) Top 5 län by approved applications [g)](sql/Uppgift_1.sql#L79-L88)
+- ✅ h) Share of distance vs classroom per area [h)](sql/Uppgift_1.sql#L105-L112)
+- ✅ i) Number of programs containing "AI" [i)](sql/Uppgift_1.sql#L128-L132)
+
+**Key results**
+- a) Most applications: Ekonomi, administration och försäljning (239), Teknik och tillverkning (221), Data/IT (220).
+- g) Top 3 län: Stockholm 135, Västra Götaland 122, Skåne 77. Uses Tabell 4 and `COUNT(DISTINCT DIARIENUMMER)`,
+  so an application running in 2 kommuner in the same län is only counted once.
+- h) Overall: Bunden 630, Distans 554.
+- i) 48 applications have "AI" in the name (37 unique program names).
+
+Sanity check for h): I expected Distans to dominate, so I counted each study format separately.
+The totals (Bunden 630, Distans 554) add up to all 1184 applications.
+
+![Sanity check STUDIEFORM, result](screenshots/Sanity_check_STUDIEFORM_01.png)
+
 ## Uppgift 2 – Intervju
+Source: my notes from the interview, supplemented with a classmate's shared notes.
 - ✅ Interview with domain expert (2026-10-21): our course teacher, playing a
   representative of The Skool, a fictional education provider used as the case for this lab.
 
@@ -49,7 +72,7 @@ and where a new academy can find an edge.
 - Differences between Distans and Bunden: is the approval rate higher for one of them?
 
 ### How it connects to the data
-- Baseline: 1184 applications. Every area is compared against this.
+- Baseline: 1184 applications. The 39% approval rate is the baseline every area is compared against.
   - 462 approved (39%)
   - 721 denied (61%)
   - 1 withdrawn (0.1%). I checked `BESLUT` for values other than approved
@@ -62,23 +85,24 @@ and where a new academy can find an edge.
 - Distans vs Bunden: `STUDIEFORM`.
 - Tabell 4 is only needed to find which län the "Flera kommuner" applications run in.
 
-my notes from the interview, supplemented with a classmate's shared notes. 
- 
 ## Uppgift 3 – Datadrivna beslut
 Code: [sql/Uppgift_3.sql](sql/Uppgift_3.sql)
-- ✅ Q1: Approval rate per education area
-- ✅ Q2: Bunden vs Distans. Bunden gets approved more often (42.54% vs 35.02%)
-- ✅ Q3: Niches within Data/IT. IT-säkerhet (481xf) is the most reliable: 21% on 33 applications, above the Data/IT average of 14%
-- ✅ Q4: Providers within Data/IT. Jensen applies the most but got 0 approved; Nackademin got 7 of 12 approved (58%)
-- ✅ Q5: AI in the program name. Approved about 10x less often (4% vs 40%)
+- ✅ Q1: Approval rate per area. Data/IT has the lowest of all areas: 14.09% vs the 39.02% baseline
+- ✅ Q2: Bunden vs Distans. Bunden is approved more often (42.54% vs 35.02%), so lean towards Bunden
+- ✅ Q3: Niches within Data/IT. Apply for IT-säkerhet (481xf, 21% on 33 applications);
+  avoid webbutvecklare (481af, 0 of 32)
+- ✅ Q4: Providers within Data/IT. Jensen has the most applications of any single unit (15) but 0 approved;
+  Nackademin got 7 of 12 (58%). Counted per company, EC Utbildning (24) and IT-Högskolan (23) apply the most
+- ✅ Q5: AI in the program name. Approved less often, but the overall 4% vs 40% is misleading:
+  most AI applications are in Data/IT. Within Data/IT it's 3.3% vs 15.8%
 
 **Key insight:** Applying a lot doesn't mean getting approved. Small groups can look
 great by luck, so I always show the number of applications next to the percentage
 and compare against a baseline (the average).
 
 - [sql/Uppgift_3.sql](sql/Uppgift_3.sql): queries and analysis ideas are my own. LLM used for hints on SQL errors,
-  pointing out that Q1/Q2 had swapped queries i made by mistake, suggesting how to structure the findings,
-  the CASE/ELSE hint in Q5, and wording the conclusions and comments.
+  pointing out that Q1/Q2 had swapped queries, the CASE/ELSE hint in Q5, flagging the Data/IT confounding in Q5,
+  the missing 481ag niche in Q3 and company-level grouping in Q4, and wording the conclusions and comments.
 
 ## Uppgift 4 – Datamodell (BONUS)
 - ⬜ Implement the data model (split the flat table into smaller tables)
@@ -103,17 +127,19 @@ and compare against a baseline (the average).
 
 Note: `DROP TABLE IF EXISTS` requires Oracle 23ai or later.
 The raw CSV is never modified; the scripts rebuild the table `MYH_TABELL_2025` from it.
- 
+
 ## LLM usage
 LLM (Claude) used as a sounding board ("bollplank"), noted in each file where used:
 - Environment setup (Podman mount, VS Code connection)
 - [sql/Uppgift_0.sql](sql/Uppgift_0.sql): load script drafted with LLM, reviewed by me;
   cleaning blocks 5–18 generated from my own 4-column pattern
 - [sql/Uppgift_1.sql](sql/Uppgift_1.sql): f) sorting fix (ORDER BY provider, program) suggested by LLM;
-  g) ORDER BY fix (sort by count DESC); i) false-positive note (lowercase "ai" matches sustAInable etc.)
-- `.gitignore`: added linux, macOS and Windows, with gitignore.io, also added scratch file name since its a playground.
-  nano was suggested was added and vim removed since it can add complications down the road.
+  g) ORDER BY fix (sort by count DESC), and LLM flagged the duplicates and corrected my `COUNT(DISTINCT)` placement;
+  i) LLM confirmed case-sensitive `'%AI%'` avoids false positives like "sustainable"
+- `.gitignore`: generated with gitignore.io for Linux, macOS and Windows, plus my scratch SQL file
+  (kept as a private playground). nano was added on suggestion, and vim removed since I don't use it.
 - Uppgift 2: wording and structure tidied with LLM help; the content is from my interview notes.
+- README and SQL comments: wording and structure tidied with LLM help.
 
 ## Sources
 - MYH: resultat ansökningsomgång 2025

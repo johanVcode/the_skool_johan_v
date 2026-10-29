@@ -34,7 +34,6 @@
   far is the * 100.0 because i dont understand how the SQLcl knows how to count everything correct and doesnt take 100.0/count(*), 2; first. 
   now i added the () for (COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0) so i know for a fact this gets counted first as a whole before
   any other addition or subdivision for the counts.
-
 ```
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_ANSÖKNINGAR, 
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJADE,
@@ -43,6 +42,9 @@ FROM MYH_TABELL_2025
 GROUP BY UTBILDNINGSOMRÅDE
 ORDER BY ANTAL_ANSÖKNINGAR DESC;
 ```
+* Once I understood it, I reused the same COUNT(CASE WHEN ...) pattern in almost every query
+  (Uppgift 1 a–e, h) and all of Uppgift 3). It feels like copy-pasting, but it's the same building block
+  with a different GROUP BY or WHERE, and I know why it works.
 
 ## Oracle infra (dataset)
 * moved the setup out of SQL_1 into its own folder instead to organize and link to diffrent projects.
@@ -55,7 +57,6 @@ to show where i keep all my projects (OBS: /scripts is not a folder nor a temp f
 sometimes it does checks before everything is set, so it connected to early. 
 
 ## Queries
-* COUNT(CASE WHEN ...): took me 4 hours to get right, Claude went down for a couple of hours so i had to use my google skills.
   Source: https://www.interviewquery.com/p/sql-count-case-when
 * The idea: turn "Beviljad" into a 1, so it can be added up 1+1+1+1=4 for everything that got Beviljad.
   Avslag is important data, but not for this count.

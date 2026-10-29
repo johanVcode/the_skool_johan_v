@@ -12,7 +12,7 @@ ORDER BY ANTAL DESC;
 
 -- Question 1: Approval rate per education area
 -- Motivation: applying costs The Skool a lot of money, so they need to know which areas are worth applying for.
--- Data/IT is applied for a lot, and the expert thinks parts of it are already full.
+-- Data/IT is applied for a lot, and they think parts of it are already full.
 
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
@@ -60,8 +60,8 @@ ORDER BY ANTAL_ANSÖKNINGAR DESC;
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS ANTAL_AVSLAGEN,
-    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0 / COUNT(*), 2) AS BEVILJAD_PROCENT,
-    ROUND(COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) * 100.0 / COUNT(*), 2) AS AVSLAGEN_PROCENT
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / COUNT(*), 2) AS BEVILJAD_PROCENT,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) * 100.00 / COUNT(*), 2) AS AVSLAGEN_PROCENT
 FROM MYH_TABELL_2025
 WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
 GROUP BY UTBILDNINGSOMRÅDE
@@ -71,8 +71,8 @@ ORDER BY BEVILJAD_PROCENT DESC;
 SELECT UTBILDNINGSOMRÅDE, SUN5_INRIKTNING, SUN5_INRIKTNING_NAMN, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS ANTAL_AVSLAGEN,
-    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0 / COUNT(*), 2) AS BEVILJAD_PROCENT,
-    ROUND(COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) * 100.0 / COUNT(*), 2) AS AVSLAGEN_PROCENT
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / COUNT(*), 2) AS BEVILJAD_PROCENT,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) * 100.00 / COUNT(*), 2) AS AVSLAGEN_PROCENT
 FROM MYH_TABELL_2025
 WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
 GROUP BY UTBILDNINGSOMRÅDE, SUN5_INRIKTNING, SUN5_INRIKTNING_NAMN
@@ -107,11 +107,14 @@ ORDER BY BEVILJAD_PROCENT DESC;
 -- Apply for: 481xf IT-säkerhet is the most reliable, 21.21% on 33 applications, above the 14.09% baseline.
 -- Avoid: 481af webbutvecklare is popular (32 applications) but got 0 approved, so applying there is likely wasted money.
 -- Same for 481xu projektledare IT (0 of 12).
+
 ---
 
 -- Question 4: Which providers apply most within Data/IT, and what is their approval rate?
 -- Motivation: The Skool wants to know who the competition is. Seeing who applies the most,
 -- and who actually gets approved, shows which providers are strong in Data/IT and how a new academy compares.
+
+---
 
 -- Baseline: Data/IT overall
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_DATA_IT,
@@ -148,7 +151,7 @@ FETCH FIRST 10 ROWS ONLY;
 -- Top 10 providers by number of approved Data/IT applications
 SELECT UTBILDNINGSANORDNARE_ADMINISTR, COUNT(*) AS ANTAL_DATA_IT,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
-    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0 / COUNT(*), 2) AS BEVILJAD_PROCENT
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / COUNT(*), 2) AS BEVILJAD_PROCENT
 FROM MYH_TABELL_2025
 WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
 GROUP BY UTBILDNINGSANORDNARE_ADMINISTR
@@ -172,7 +175,7 @@ FETCH FIRST 10 ROWS ONLY;
 
 SELECT CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END AS AI_GRUPP, COUNT(*) AS ANTAL_UTBILDNINGSNAMN,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
-    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.0 / COUNT(*), 2) AS BEVILJAD_PROCENT
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / COUNT(*), 2) AS BEVILJAD_PROCENT
 FROM MYH_TABELL_2025
 GROUP BY CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END
 ORDER BY BEVILJAD_PROCENT DESC;
@@ -205,4 +208,5 @@ ORDER BY ANTAL_UTBILDNINGSNAMN DESC;
 
 -- Uppgift 3: queries and analysis ideas are my own. LLM used for hints on SQL errors,
 -- pointing out that Q1/Q2 had swapped queries, the CASE/ELSE hint in Q5, flagging the
--- Data/IT confounding in Q5, suggesting how to structure the findings, and wording the comments in Q2–Q5.
+-- Data/IT confounding in Q5, the missing 481ag niche in Q3 and company-level grouping in Q4,
+-- suggesting how to structure the findings, and wording the comments in Q1–Q5.
