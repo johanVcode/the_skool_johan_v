@@ -102,43 +102,36 @@ FETCH FIRST 5 ROWS ONLY;
 
 -- Uppgift 1
 -- h). Distans vs Bunden
-
--- went originally STUDIEFORM everywhere, but the LLM pointed out that i was using the wrong one. but right code.
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN STUDIEFORM = 'Bunden' THEN 1 END) AS ANTAL_BUNDEN,
     COUNT(CASE WHEN STUDIEFORM = 'Distans' THEN 1 END) AS ANTAL_DISTANS,
-    ROUND((COUNT(CASE WHEN STUDIEFORM = 'Bunden' THEN 1 END) * 100.0) / count(*), 2) AS BUNDEN_PROCENT,
-    ROUND((COUNT(CASE WHEN STUDIEFORM = 'Distans' THEN 1 END) * 100.0) / count(*), 2) AS DISTANS_PROCENT
+    ROUND(COUNT(CASE WHEN STUDIEFORM = 'Bunden' THEN 1 END) * 100.0 / COUNT(*), 2) AS BUNDEN_PROCENT,
+    ROUND(COUNT(CASE WHEN STUDIEFORM = 'Distans' THEN 1 END) * 100.0 / COUNT(*), 2) AS DISTANS_PROCENT
 FROM MYH_TABELL_2025
 GROUP BY UTBILDNINGSOMRÅDE
 ORDER BY ANTAL_ANSÖKNINGAR DESC;
 
--- SANITY CHECK, did not expect such close result of Distans vs Bunden
--- it was close % so had to make this check because i didnt believe the results.
--- so did this code to double check
+-- SANITY CHECK: expected Distans to dominate, but totals show Bunden 630 vs Distans 554.
 
 SELECT STUDIEFORM, COUNT(*) AS TOTAL_DISTANCE FROM MYH_TABELL_2025
 WHERE STUDIEFORM = 'Distans'
 GROUP BY STUDIEFORM;
 
-----
-
 SELECT STUDIEFORM, COUNT(*) AS TOTAL_BUNDEN FROM MYH_TABELL_2025
 WHERE STUDIEFORM = 'Bunden'
 GROUP BY STUDIEFORM;
 
-----
+---
 
---Uppgift 1
+-- Uppgift 1
 -- i). AI counted
 SELECT COUNT(*) AS ANTAL_AI
 FROM MYH_TABELL_2025
-WHERE UTBILDNINGSNAMN LIKE '%AI%' --48 on its own
-    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%' --adds 0, total still 48
-    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIELL INTELLIGENS%'; --adds 0, total still 48
--- After doing the Uppgift_3 SANITY CHECK/BASELINE, I got an idea to further improve
--- this code block: adding 2 ORs and making use of ARTIFICIELL INTELLIGENS,
--- because AI can be written in different ways, especially in a different language.
+WHERE UTBILDNINGSNAMN LIKE '%AI%' -- 48 on its own. No UPPER() on purpose: avoids matching lowercase "ai" inside words
+    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%' -- adds 0, total still 48
+    OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIELL INTELLIGENS%'; -- adds 0, total still 48
+-- After the Uppgift_3 sanity check/baseline, I added the 2 ORs because AI can be
+-- written out in full, in English or Swedish.
 
 /* Old Version, before adding ARTIFICIELL INTELLIGENS:
 SELECT COUNT(*) AS ANTAL_AI
@@ -146,4 +139,4 @@ FROM MYH_TABELL_2025
 WHERE UTBILDNINGSNAMN LIKE '%AI%' OR UPPER(UTBILDNINGSNAMN) LIKE '%ARTIFICIAL INTELLIGENCE%'
 Don't need specifics, just count all lines
 add a bouncer WHERE UTBILDNINGSNAMN with a specific filter LIKE '%WORD%'
-*/ 
+*/
