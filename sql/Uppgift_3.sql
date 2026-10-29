@@ -211,6 +211,16 @@ ORDER BY ANTAL_UTBILDNINGSNAMN DESC;
 
 -- CAUTION: the comparison above is misleading on its own.
 -- 30 of the 48 AI applications are in Data/IT, which has a low approval rate overall (14.09%).
+
+-- Question 5 follow-up: same query, filtered to Data/IT only.
+SELECT CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END AS AI_GRUPP, COUNT(*) AS ANTAL_UTBILDNINGSNAMN,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) ANTAL_BEVILJAD,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / COUNT(*), 2) AS BEVILJAD_PROCENT
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
+GROUP BY CASE WHEN UTBILDNINGSNAMN LIKE '%AI%' THEN 'AI' ELSE 'Not AI' END
+ORDER BY BEVILJAD_PROCENT DESC;
+
 -- Comparing within Data/IT only: AI 1 of 30 (3.3%) vs Not AI 30 of 190 (15.8%).
 
 -- CONCLUSION
@@ -218,7 +228,8 @@ ORDER BY ANTAL_UTBILDNINGSNAMN DESC;
 -- Putting AI in the program name does not make an application more likely to be approved.
 
 
--- Uppgift 3: queries and analysis ideas are my own. LLM used for hints on SQL errors,
--- pointing out that Q1/Q2 had swapped queries, the CASE/ELSE hint in Q5, flagging the
--- Data/IT confounding in Q5, the missing 481ag niche in Q3 and company-level grouping in Q4,
+-- Uppgift 3: queries and analysis ideas are my own. All SQL in this file is written by me.
+-- LLM used for hints on SQL errors, pointing out that Q1/Q2 had swapped queries, the CASE/ELSE hint in Q5,
+-- flagging the Data/IT confounding in Q5 and suggesting the Data/IT follow-up queries in Q2 and Q5
+-- (I wrote both queries myself), the missing 481ag niche in Q3 and company-level grouping in Q4,
 -- suggesting how to structure the findings, and wording the comments in Q1–Q5.
