@@ -33,7 +33,8 @@ ORDER BY ANTAL_ANSÖKNINGAR DESC;
 ---
 
 -- Question 2: Differences between Distans and Bunden: is the approval rate higher for one of them?
-
+-- Motivation: applying costs The Skool a lot of money, and the study format is chosen per application.
+-- If one format is approved less often, choosing it raises the risk of a costly rejection.
 SELECT STUDIEFORM, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS ANTAL_AVSLAG,
@@ -42,14 +43,19 @@ SELECT STUDIEFORM, COUNT(*) AS ANTAL_ANSÖKNINGAR,
 FROM MYH_TABELL_2025
 GROUP BY STUDIEFORM
 ORDER BY ANTAL_ANSÖKNINGAR DESC;
-
---Same codeblock as question 1, but grouped by STUDIEFORM instead of UTBILDNINGSOMRÅDE.
---Bunden has the higher approval rate: 42.54% vs 35.02% for Distans.
+-- Same code block as Question 1, but grouped by STUDIEFORM instead of UTBILDNINGSOMRÅDE.
+-- Result: Bunden 42.54% vs Distans 35.02%, against an overall baseline of 39.02%.
+-- Bunden is above the baseline, Distans is about 4 percentage points below it.
+-- Recommendation: lean towards Bunden to beat the baseline. Don't drop Distans entirely.
 
 ---
 
 -- Question 3: Which niches within Data/IT have the highest approval rate?
+-- Motivation: the expert thinks parts of Data/IT are already full. Data/IT in general has a low
+-- approval rate (14%), but there are probably some niches where an application is worth the cost,
+-- and some where it's wasted.
 
+-- Baseline: Data/IT overall (14.09% approved, 85.91% rejected)
 SELECT UTBILDNINGSOMRÅDE, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS ANTAL_AVSLAGEN,
@@ -60,6 +66,7 @@ WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
 GROUP BY UTBILDNINGSOMRÅDE
 ORDER BY BEVILJAD_PROCENT DESC;
 
+-- Approval rate per niche (SUN5_INRIKTNING) within Data/IT
 SELECT UTBILDNINGSOMRÅDE, SUN5_INRIKTNING, SUN5_INRIKTNING_NAMN, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS ANTAL_AVSLAGEN,
@@ -70,32 +77,35 @@ WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
 GROUP BY UTBILDNINGSOMRÅDE, SUN5_INRIKTNING, SUN5_INRIKTNING_NAMN
 ORDER BY BEVILJAD_PROCENT DESC;
 
--- small sample size, have high approval rating, dont take that literally since the sample size is small.
--- Data/IT sanitycheck/baseline (14.09% approval and 85.91% denial)
+-- Note: some niches have a high approval rate on very few applications.
+-- Don't take those literally, since the sample size is too small.
 
---HIGH APPROVAL RATE WITH LOW APPLICATION
--- 481ae 2 applications and 2 approvals, 100%
--- 481ab 6 applications and 4 approvals, 66.67%
--- 481xd 5 applications and 2 approvals, 40%
+-- HIGH APPROVAL RATE, FEW APPLICATIONS (too small to trust)
+-- 481ae databasutvecklare:       2 applications, 2 approved, 100%
+-- 481ab programmerare, spel:     6 applications, 4 approved, 66.67%
+-- 481xd systemadministratörer:   5 applications, 2 approved, 40%
 
---ABOVE BASELINE - 14.09% approval
---489zd 16 applications and 4 approvals, 25% approval
---489zf 9 applications and 2 approvals, 22.22% approval
---481xf 33 applications and 7 approvals, 21.21% approval
+-- ABOVE BASELINE (14.09%)
+-- 481ag mjukvarutestare:         9 applications, 3 approved, 33.33%
+-- 489zd IT-infrastrukturtekniker: 16 applications, 4 approved, 25%
+-- 489zf interaktionsdesign:      9 applications, 2 approved, 22.22%
+-- 481xf IT-säkerhet:             33 applications, 7 approved, 21.21%
 
---HIGH DENY RATE
---481ad 10 applications and 1 approvals, 10% approval
---481xe 34 applications and 3 approvals, 8.82% approval
---481ac 41 applications and 3 approvals, 7.32% approval
+-- BELOW BASELINE
+-- 481ad inbyggda system och IoT: 10 applications, 1 approved, 10%
+-- 481xe dataanalys och datavetenskap: 34 applications, 3 approved, 8.82%
+-- 481ac systemhantering och programmering: 41 applications, 3 approved, 7.32%
 
---100% DENY RATE
---481xu 12 applications and 0 approvals, 0% approval
---481xy 1 applications and 0 approvals, 0% approval - dont count this one, to small sample
---481af 32 applications and 0 approvals, 0% approval - dont apply more for this, waste of money.
---481ay 10 applications and 0 approvals, 0% approval
+-- 0% APPROVED
+-- 481af webbutvecklare:          32 applications, 0 approved
+-- 481xu projektledare IT:        12 applications, 0 approved
+-- 481ay övriga systemutveckling och programmering: 10 applications, 0 approved
+-- 481xy övriga datavetenskap och systemvetenskap: 1 application, 0 approved (too small to count)
 
---CONCLUSION
---481xf (IT-säkerhet) has the most reliable high approval rate: 21.21% on 33 applications, above the 14.09% Data/IT baseline.
+-- CONCLUSION
+-- Apply for: 481xf IT-säkerhet is the most reliable, 21.21% on 33 applications, above the 14.09% baseline.
+-- Avoid: 481af webbutvecklare is popular (32 applications) but got 0 approved, so applying there is likely wasted money.
+-- Same for 481xu projektledare IT (0 of 12).
 ---
 
 -- Question 4: Which providers apply most within Data/IT, and what is their approval rate?

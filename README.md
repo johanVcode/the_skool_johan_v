@@ -3,20 +3,19 @@
 My first SQL analysis project: loading MYH's 2025 application results into
 Oracle Database and answering questions with SQL, to help the education
 provider The Skool decide which programs to apply for.
-
-> **Kept as submitted.** This was my first SQL analysis project, and I've
-> left it exactly as I handed it in, mistakes included, so you can see where
-> I started. What I'd do differently today is listed at the bottom.
  
 ## Uppgift 0 – Uppvärmning
 Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - ✅ a) Repo: `the_skool_johan_v` (surname shortened for privacy)
 - ✅ b) [.gitignore](.gitignore)
 - ✅ c) Data from MYH: [data/resultat-ansokningsomgang-2025.xlsx](data/resultat-ansokningsomgang-2025.xlsx)
-- ✅ d) Only Tabell 3 kept: [data/resultat_2025_tabell3.csv](data/resultat_2025_tabell3.csv)
+- ✅ d) Tabell 3 kept: [data/resultat_2025_tabell3.csv](data/resultat_2025_tabell3.csv)
+  - **Deliberate deviation:** Tabell 4 is also kept: [data/resultat_2025_tabell4.csv](data/resultat_2025_tabell4.csv).
+    Tabell 3 groups applications that run in several kommuner under `LÄN = 'Flera kommuner'`.
+    Tabell 4 lists those applications per kommun, which is needed to place them in a län for Uppgift 1 g).
 - ✅ e) Load into Oracle: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 - ✅ f) One script per task: see the [sql/](sql/) folder
-- ✅ Extra: data cleaning (130 values with extra spaces), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
+- ✅ Extra: data cleaning (extra spaces removed from 130 values in Tabell 3 and 80 in Tabell 4), also in [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 
 ## Uppgift 1 – Grundläggande EDA
 Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)

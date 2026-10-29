@@ -1,7 +1,7 @@
 -- experimented after a while from finding the solution in my scratch file
 -- and thought what if we can use 1 command block instead of many? checked to add more counts to the questions so in short 
 -- we can pack it more densely and use the same SELECT instead of many blocks 
--- COUNT can be used as many times since every condition is still seperate, and doesnt mix with other counts
+-- COUNT can be used as many times since every condition is still separate, and doesnt mix with other counts
 
 -- Uppgift 1
 -- a), b), c). Sorted by most applications.
@@ -14,12 +14,12 @@ GROUP BY UTBILDNINGSOMRÅDE
 ORDER BY ANTAL_ANSÖKNINGAR DESC; -- a)
 
 -- Uppgift 1
--- d), e). Sorted by most
+-- d), e). Sorted by most applications.
 SELECT UTBILDNINGSNAMN, COUNT(*) AS ANTAL_ANSÖKNINGAR,
     COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS DATA_IT_BEVILJAD, -- d)
     COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS DATA_IT_AVSLAG -- e)
 FROM MYH_TABELL_2025
-WHERE UTBILDNINGSOMRÅDE = 'Data/IT' -- keep only "Data/IT" so its the only thing being counted.
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT' -- keep only "Data/IT" so it's the only thing being counted.
 GROUP BY UTBILDNINGSNAMN
 ORDER BY ANTAL_ANSÖKNINGAR DESC;
 
@@ -113,7 +113,7 @@ ORDER BY ANTAL_ANSÖKNINGAR DESC;
 
 -- SANITY CHECK: expected Distans to dominate, but totals show Bunden 630 vs Distans 554.
 
-SELECT STUDIEFORM, COUNT(*) AS TOTAL_DISTANCE FROM MYH_TABELL_2025
+SELECT STUDIEFORM, COUNT(*) AS TOTAL_DISTANS FROM MYH_TABELL_2025
 WHERE STUDIEFORM = 'Distans'
 GROUP BY STUDIEFORM;
 
