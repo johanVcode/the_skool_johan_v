@@ -1,5 +1,3 @@
--- group by and count whats most populer, maybe we can add compares with other headers??
-
 -- experimented after a while from finding the solution in my scratch file
 -- and thought what if we can use 1 command block instead of many? checked to add more counts to the questions so in short 
 -- we can pack it more densely and use the same SELECT instead of many blocks 
@@ -26,18 +24,16 @@ GROUP BY UTBILDNINGSNAMN
 ORDER BY ANTAL_ANSÖKNINGAR DESC;
 
 -- Uppgift 1
--- f). was about to use the same method as d)/e) but had some knowledge gap and was prompted to fix it with a much more elegant way
--- still not satisfied because the data looks ugly, sure Nackademin Aktiebolag comes up a lot for example, and it only should show once
+-- f)
 SELECT UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN, COUNT(*) AS ANTAL_BEVILJAD
 FROM MYH_TABELL_2025
 WHERE UTBILDNINGSOMRÅDE = 'Data/IT' 
     AND BESLUT = 'Beviljad'
 GROUP BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN
 ORDER BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; 
--- ORDER BY ANTAL_BEVILJAD DESC; was my last attempt, it wasnt wrong per say, all counts were 1 so sorting by it did nothing
 -- the "duplicates" were not duplicates, each row is a different program from the same provider.
--- claude LLM suggested that i put UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN; because its A -> Z because its not a numerical value
--- and DESC; is not needed. THIS IS A HUGE KNOWLEDGE GAP AND I WILL READ MORE THOROUGLY ABOUT IT
+-- ORDER BY provider, program (A→Z, ASC is default): groups each provider's programs together.
+-- Sorting by ANTAL_BEVILJAD was useless since every count is 1. Sort order fix suggested by LLM.
 
 -- TOP 5 LÄN BY APPROVED APPLICATION
 -- Uppgift 1
@@ -52,11 +48,9 @@ FETCH FIRST 5 ROWS ONLY;
 -- knew there was a command to take only the TOP by a value, and could write a simple code block 
 -- that took BESLUT with the text 'Beviljad' and counted those up, with a bouncer called WHERE.
 -- ORDER BY fixed with LLM help: top = sort by the count DESC, not by LÄN
--- We where told to only use tabell 3 but there are important data coming from tabell 4 that explains 
--- the notations of "Flera kommuner" so improved the query, check below
 */
 
--- SANITYCHECK - each table 
+-- SANITY CHECK - each table 
 
 SELECT BESLUT, LÄN, COUNT(DISTINCT DIARIENUMMER) AS ANTAL_BEVILJAD FROM MYH_TABELL_2025
 WHERE ANTAL_KOMMUNER = 1
@@ -65,10 +59,10 @@ GROUP BY BESLUT, LÄN
 ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
 
+-- cross check
 -- Stockholm 89 Beviljad
 -- Västra Götaland 89 Beviljad
 -- Skåne 45 Beviljad
--- more listed
 
 SELECT BESLUT, LÄN, COUNT(DISTINCT DIARIENUMMER) AS ANTAL_BEVILJAD FROM MYH_TABELL4_2025
 WHERE BESLUT = 'Beviljad'
@@ -76,10 +70,12 @@ GROUP BY BESLUT, LÄN
 ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
 
+-- cross check
 -- Stockholm 46 Beviljad
 -- Västra Götaland 33 Beviljad
 -- Skåne 32 Beviljad
 
+-- g) --- ANSWER ---
 SELECT BESLUT, LÄN, COUNT(DISTINCT DIARIENUMMER) AS ANTAL_BEVILJAD 
 FROM (
     SELECT BESLUT, LÄN, DIARIENUMMER FROM MYH_TABELL4_2025
@@ -91,16 +87,18 @@ GROUP BY BESLUT, LÄN
 ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
 
+-- cross check
 -- Stockholm 89 + 46 = 135
 -- Västra Götaland 89 + 33 = 122
 -- Skåne 45 + 32 = 77 
 
--- LLM pointed out that there are duplicates, i can maybe use DIARIENUMMER as a unique identifier?
--- Will come back to this later
--- came back and found out how to use DISTINCT DIARIENUMMER, i first thought i had to put it inside with a 
--- in FROM COUNT(DISTINCT) and outside block to be DIARIENUMMER alas it was the REVERSE and the LLM pointed
--- this flaw out after a sanity check with it.
+-- Task 0d says keep only Tabell 3, but Tabell 3 lumps multi-kommun applications under
+-- LÄN = 'Flera kommuner'. Tabell 4 has one row per kommun for those, so it's needed to place them in a län.
+-- Tabell 4 can list the same application twice in one län (e.g. MYH 2025/3229: Nacka + Södertälje),
+-- so COUNT(*) double-counts. COUNT(DISTINCT DIARIENUMMER) counts each application once per län.
+-- LLM flagged the duplicates and corrected my DISTINCT placement (count in outer query, not inner).
 
+---
 
 -- Uppgift 1
 -- h). Distans vs Bunden
