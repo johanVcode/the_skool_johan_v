@@ -22,10 +22,8 @@ Only the sheets Tabell 3 and Tabell 4 were exported to CSV and loaded.
 
 ![MYH source file](screenshots/myh_source_2025.png)
 
-The `.gitignore` excludes OS files (Linux, macOS, Windows), editor files and my scratch SQL file,
+The [.gitignore](.gitignore) excludes OS files (Linux, macOS, Windows), editor files and my scratch SQL file,
 so only the finished scripts are in the repo.
-
-![.gitignore](screenshots/gitignore.png)
 
 ## Uppgift 1 – Grundläggande EDA
 Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
@@ -46,10 +44,14 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 - h) Overall: Bunden 630, Distans 554.
 - i) 48 applications have "AI" in the name (37 unique program names).
 
+g) Top 5 län after combining Tabell 3 and Tabell 4 and counting each application once:
+
+![Top 5 län](screenshots/001-top5-lan.png)
+
 Sanity check for h): I expected Distans to dominate, so I counted each study format separately.
 The totals (Bunden 630, Distans 554) add up to all 1184 applications.
 
-![Sanity check STUDIEFORM, result](screenshots/Sanity_check_STUDIEFORM_01.png)
+![Sanity check STUDIEFORM](screenshots/002-distans-bunden.png)
 
 ## Uppgift 2 – Intervju
 Source: my notes from the interview, supplemented with a classmate's shared notes.
@@ -96,6 +98,16 @@ Code: [sql/Uppgift_3.sql](sql/Uppgift_3.sql)
 - ✅ Q5: AI in the program name. Approved less often, but the overall 4% vs 40% is misleading:
   most AI applications are in Data/IT. Within Data/IT it's 3.3% vs 15.8%
 
+Q3/Q4 baseline: Data/IT has 220 applications and 31 approved (14.09%). Every niche and provider is compared against this.
+
+![Data/IT baseline](screenshots/003-data-it-baseline.png)
+
+Q5 sanity check: every program with AI in the name, including AI spelled out in English and Swedish.
+37 unique names, and only 2 applications approved in total.
+
+![AI search query](screenshots/004-AI-search.png)
+![AI search result](screenshots/005-AI-search-query.png)
+
 **Key insight:** Applying a lot doesn't mean getting approved. Small groups can look
 great by luck, so I always show the number of applications next to the percentage
 and compare against a baseline (the average).
@@ -130,14 +142,15 @@ The raw CSV is never modified; the scripts rebuild the table `MYH_TABELL_2025` f
 
 ## LLM usage
 LLM (Claude) used as a sounding board ("bollplank"), noted in each file where used:
-- Environment setup (Podman mount, VS Code connection)
+- Environment setup (Podman mount)
 - [sql/Uppgift_0.sql](sql/Uppgift_0.sql): load script drafted with LLM, reviewed by me;
   cleaning blocks 5–18 generated from my own 4-column pattern
 - [sql/Uppgift_1.sql](sql/Uppgift_1.sql): f) sorting fix (ORDER BY provider, program) suggested by LLM;
   g) ORDER BY fix (sort by count DESC), and LLM flagged the duplicates and corrected my `COUNT(DISTINCT)` placement;
   i) LLM confirmed case-sensitive `'%AI%'` avoids false positives like "sustainable"
 - `.gitignore`: generated with gitignore.io for Linux, macOS and Windows, plus my scratch SQL file
-  (kept as a private playground). nano was added on suggestion, and vim removed since I don't use it.
+  (kept as a private playground). nano was added on suggestion, and the Vim section removed because
+  its swap-file pattern also matches `.sql` files.
 - Uppgift 2: wording and structure tidied with LLM help; the content is from my interview notes.
 - README and SQL comments: wording and structure tidied with LLM help.
 
