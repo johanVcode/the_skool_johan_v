@@ -42,21 +42,23 @@ ORDER BY UTBILDNINGSANORDNARE_ADMINISTR, UTBILDNINGSNAMN;
 -- TOP 5 LÄN BY APPROVED APPLICATION
 -- Uppgift 1
 -- g)
+/* Old Version
 SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD FROM MYH_TABELL_2025
 WHERE BESLUT = 'Beviljad'
 GROUP BY BESLUT, LÄN
 ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
+
 -- knew there was a command to take only the TOP by a value, and could write a simple code block 
 -- that took BESLUT with the text 'Beviljad' and counted those up, with a bouncer called WHERE.
 -- ORDER BY fixed with LLM help: top = sort by the count DESC, not by LÄN
 -- We where told to only use tabell 3 but there are important data coming from tabell 4 that explains 
 -- the notations of "Flera kommuner" so improved the query, check below
+*/
 
 -- SANITYCHECK - each table 
 
-SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD 
-FROM MYH_TABELL_2025
+SELECT BESLUT, LÄN, COUNT(DISTINCT DIARIENUMMER) AS ANTAL_BEVILJAD FROM MYH_TABELL_2025
 WHERE ANTAL_KOMMUNER = 1
     AND BESLUT = 'Beviljad'
 GROUP BY BESLUT, LÄN
@@ -68,33 +70,36 @@ FETCH FIRST 5 ROWS ONLY;
 -- Skåne 45 Beviljad
 -- more listed
 
-SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD FROM MYH_TABELL4_2025
+SELECT BESLUT, LÄN, COUNT(DISTINCT DIARIENUMMER) AS ANTAL_BEVILJAD FROM MYH_TABELL4_2025
 WHERE BESLUT = 'Beviljad'
 GROUP BY BESLUT, LÄN
 ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
 
--- Stockholm 48 Beviljad
--- Västra Götaland 36 Beviljad
+-- Stockholm 46 Beviljad
+-- Västra Götaland 33 Beviljad
 -- Skåne 32 Beviljad
 
-SELECT BESLUT, LÄN, COUNT(*) AS ANTAL_BEVILJAD 
+SELECT BESLUT, LÄN, COUNT(DISTINCT DIARIENUMMER) AS ANTAL_BEVILJAD 
 FROM (
-    SELECT BESLUT, LÄN FROM MYH_TABELL4_2025
+    SELECT BESLUT, LÄN, DIARIENUMMER FROM MYH_TABELL4_2025
     UNION ALL
-    SELECT BESLUT, LÄN FROM MYH_TABELL_2025 WHERE ANTAL_KOMMUNER = 1
+    SELECT BESLUT, LÄN, DIARIENUMMER FROM MYH_TABELL_2025 WHERE ANTAL_KOMMUNER = 1
 )
 WHERE BESLUT = 'Beviljad'
 GROUP BY BESLUT, LÄN
 ORDER BY ANTAL_BEVILJAD DESC
 FETCH FIRST 5 ROWS ONLY; 
 
--- Stockholm 89 + 48 = 137
--- Västra Götaland 89 + 36 = 125
+-- Stockholm 89 + 46 = 135
+-- Västra Götaland 89 + 33 = 122
 -- Skåne 45 + 32 = 77 
 
 -- LLM pointed out that there are duplicates, i can maybe use DIARIENUMMER as a unique identifier?
 -- Will come back to this later
+-- came back and found out how to use DISTINCT DIARIENUMMER, i first thought i had to put it inside with a 
+-- in FROM COUNT(DISTINCT) and outside block to be DIARIENUMMER alas it was the REVERSE and the LLM pointed
+-- this flaw out after a sanity check with it.
 
 
 -- Uppgift 1
