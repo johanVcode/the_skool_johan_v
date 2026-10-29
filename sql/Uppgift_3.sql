@@ -47,6 +47,20 @@ ORDER BY ANTAL_ANSÖKNINGAR DESC;
 -- Bunden is above the baseline, Distans is about 4 percentage points below it.
 -- Recommendation: lean towards Bunden to beat the baseline. Don't drop Distans entirely.
 
+-- Question 2 follow-up: same query, filtered to Data/IT only (The Skool's main area).
+SELECT STUDIEFORM, COUNT(*) AS ANTAL_ANSÖKNINGAR,
+    COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) AS ANTAL_BEVILJAD,
+    COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) AS ANTAL_AVSLAG,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Beviljad' THEN 1 END) * 100.00 / COUNT(*), 2) AS BEVILJAD_PROCENT,
+    ROUND(COUNT(CASE WHEN BESLUT = 'Avslag' THEN 1 END) * 100.00 / COUNT(*), 2) AS AVSLAG_PROCENT
+FROM MYH_TABELL_2025
+WHERE UTBILDNINGSOMRÅDE = 'Data/IT'
+GROUP BY STUDIEFORM
+ORDER BY ANTAL_ANSÖKNINGAR DESC;
+
+-- Result: Bunden 16.27% (27 of 166) vs Distans 7.41% (4 of 54), against the 14.09% Data/IT baseline.
+-- The gap is about twice as large within Data/IT, so the Bunden recommendation matters even more here.
+
 ---
 
 -- Question 3: Which niches within Data/IT have the highest approval rate?
