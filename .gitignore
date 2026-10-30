@@ -1,6 +1,10 @@
 ### Secrets ###
 .env
 *.env
+.env*
+*.pem
+*.key
+id_*
 
 ### Nano ###
 *.save
