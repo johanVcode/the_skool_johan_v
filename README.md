@@ -124,8 +124,8 @@ and compare against a baseline (the average).
 - ✅ This file
 
 ## Uppgift 6 – Video + slides
-- ⬜ Presentation (PDF): ...
-- ⬜ Video (5–10 min): ...
+- ✅ Presentation (PDF): [the_skool_presentation.pdf](the_skool_presentation.pdf)
+- ✅ Video (5–10 min): [Video](PASTE_VIDEO_LINK)
 
 ## Tools
 - Oracle Database 26ai Free (run in rootless Podman on Oracle Linux 10)
