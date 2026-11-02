@@ -20,7 +20,15 @@ Code: [sql/Uppgift_0.sql](sql/Uppgift_0.sql)
 The data comes from MYH's "Resultat ansökningsomgång 2025" Excel file (published 2026-01-13).
 Only the sheets Tabell 3 and Tabell 4 were exported to CSV and loaded.
 
-![MYH source file](screenshots/myh_source_2025.png)
+![MYH source file](images/myh_source_2025.png)
+
+<details>
+<summary>Screenshots: load and cleaning checks</summary>
+
+![Row count after load](images/007-load-row-count.png)
+![TRIM cleaning](images/008-trim-cleaning.png)
+
+</details>
 
 The [.gitignore](.gitignore) excludes OS files (Linux, macOS, Windows), editor files and my scratch SQL file,
 so only the finished scripts are in the repo.
@@ -46,12 +54,12 @@ Code: [sql/Uppgift_1.sql](sql/Uppgift_1.sql)
 
 g) Top 5 län after combining Tabell 3 and Tabell 4 and counting each application once:
 
-![Top 5 län](screenshots/001-top5-lan.png)
+![Top 5 län](images/001-top5-lan.png)
 
 Sanity check for h): I expected Distans to dominate, so I counted each study format separately.
 The totals (Bunden 630, Distans 554) add up to all 1184 applications.
 
-![Sanity check STUDIEFORM](screenshots/002-distans-bunden.png)
+![Sanity check STUDIEFORM](images/002-distans-bunden.png)
 
 ## Uppgift 2 – Intervju
 Source: my notes from the interview, supplemented with a classmate's shared notes.
@@ -100,13 +108,24 @@ Code: [sql/Uppgift_3.sql](sql/Uppgift_3.sql)
 
 Q3/Q4 baseline: Data/IT has 220 applications and 31 approved (14.09%). Every niche and provider is compared against this.
 
-![Data/IT baseline](screenshots/003-data-it-baseline.png)
+![Data/IT baseline](images/003-data-it-baseline.png)
 
 Q5 sanity check: every program with AI in the name, including AI spelled out in English and Swedish.
 37 unique names, and only 2 applications approved in total.
 
-![AI search query](screenshots/004-AI-search.png)
-![AI search result](screenshots/005-AI-search-query.png)
+![AI search query](images/004-AI-search.png)
+![AI search result](images/005-AI-search-query.png)
+
+<details>
+<summary>Screenshots: results for Q1–Q5</summary>
+
+![Q1 Approval rate per area](images/009-approval-per-area.png)
+![Q2 Bunden vs Distans in Data/IT](images/010-distans-bunden-data-it.png)
+![Q3 Niches within Data/IT](images/011-data-it-niches.png)
+![Q4 Providers within Data/IT](images/006-data-it-providers.png)
+![Q5 AI within Data/IT](images/012-ai-data-it.png)
+
+</details>
 
 **Key insight:** Applying a lot doesn't mean getting approved. Small groups can look
 great by luck, so I always show the number of applications next to the percentage
@@ -124,8 +143,8 @@ and compare against a baseline (the average).
 - ✅ This file
 
 ## Uppgift 6 – Video + slides
-- ✅ Presentation (PDF): [the_skool_presentation.pdf](the_skool_presentation.pdf)
-- ✅ Video (5–10 min): [Video](PASTE_VIDEO_LINK)
+- ✅ Presentation (PDF): [docs/the_skool_presentation.pdf](docs/the_skool_presentation.pdf)
+- ✅ Video (5–10 min): submitted as a YouTube link on the student portal
 
 ## Tools
 - Oracle Database 26ai Free (run in rootless Podman on Oracle Linux 10)
@@ -135,7 +154,7 @@ and compare against a baseline (the average).
 ## How to run
 1. Start Oracle Database (Podman) and connect with SQLcl or SQL Developer.
 2. Change the CSV path in [sql/Uppgift_0.sql](sql/Uppgift_0.sql) to where you cloned this repo.
-3. Run `Uppgift_0.sql` (load + clean, expect `COUNT(*) = 1184`), then `Uppgift_1.sql`.
+3. Run `Uppgift_0.sql` (load + clean, expect `COUNT(*) = 1184`), then `Uppgift_1.sql` and `Uppgift_3.sql`.
 
 Note: `DROP TABLE IF EXISTS` requires Oracle 23ai or later.
 The raw CSV is never modified; the scripts rebuild the table `MYH_TABELL_2025` from it.
@@ -148,6 +167,8 @@ LLM (Claude) used as a sounding board ("bollplank"), noted in each file where us
 - [sql/Uppgift_1.sql](sql/Uppgift_1.sql): f) sorting fix (ORDER BY provider, program) suggested by LLM;
   g) ORDER BY fix (sort by count DESC), and LLM flagged the duplicates and corrected my `COUNT(DISTINCT)` placement;
   i) LLM confirmed case-sensitive `'%AI%'` avoids false positives like "sustainable"
+- [sql/Uppgift_3.sql](sql/Uppgift_3.sql): queries written by me, reusing the `COUNT(CASE WHEN)` pattern from
+  Uppgift 1; LLM hints are listed in the Uppgift 3 section above.
 - `.gitignore`: generated with gitignore.io for Linux, macOS and Windows, plus my scratch SQL file
   (kept as a private playground). nano was added on suggestion, and the Vim section removed because
   its swap-file pattern also matches `.sql` files.
